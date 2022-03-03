@@ -35,10 +35,8 @@ describe("Obter indicadores", () => {
     const { estados } = await obterIndicadoresUseCase.execute();
 
     //* Regex feita na esperança da pandemia acabar até 2029 🙏
-    estados.forEach((estado, index) => {
-      expect(estados[index].ultima_atualizacao).toMatch(
-        /^(([012][0-9]|3[01])\/(0[1-9]|1[012])\/(2019|202[0-9])) (([01][0-9]|2[123]):[0-5][0-9]:[0-5][0-9])$/
-      );
-    });
+    expect(estados[0].ultima_atualizacao).toMatch(
+      /^(([012][0-9]|3[01])\/(0[1-9]|1[012])\/(2019|202[0-9])) (([01][0-9]|2[123]):[0-5][0-9]:[0-5][0-9])$/
+    );
   });
 });
