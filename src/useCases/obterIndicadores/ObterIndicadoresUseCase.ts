@@ -77,6 +77,7 @@ class ObterIndicadoresUseCase {
   async execute() {
     /*
       console.time("double await");
+      //* Média de 1.6 segundos
       const {
         data: { All: infoPais, ...estados },
       } = await httpClient.get<IInfoPais>(
@@ -91,8 +92,9 @@ class ObterIndicadoresUseCase {
       console.timeEnd("double await");
     */
 
-    //* Promise.all é em média 0.5 segundos mais rápido que 2 awaits
+    //* Promise.all é em média 2x mais rápido que 2 awaits
     // console.time("Promise.all");
+    //* Média de 0.8 segundos
     const [
       {
         data: { All: infoPais, ...estados },
@@ -101,10 +103,10 @@ class ObterIndicadoresUseCase {
         data: { All: infoVacinacaoPais },
       },
     ] = await Promise.all([
-      await httpClient.get<IInfoPais>(
+      httpClient.get<IInfoPais>(
         "https://covid-api.mmediagroup.fr/v1/cases?country=Brazil"
       ),
-      await httpClient.get<IInfoVacinacaoPais>(
+      httpClient.get<IInfoVacinacaoPais>(
         "https://covid-api.mmediagroup.fr/v1/vaccines?country=Brazil"
       ),
     ]);
