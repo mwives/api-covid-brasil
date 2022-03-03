@@ -6,7 +6,7 @@
     "start:dev": "ts-node-dev ./src/shared/infra/http/server.ts --respawn --transpile-only --ignore-watch node_modules",
     "lint": "eslint \"src/**\"",
     "test": "jest --silent",
-    "test:verbose": "jest",
+    "test:verbose": "jest --verbose",
     "test:watch": "jest --watch"
   },
   "dependencies": {
