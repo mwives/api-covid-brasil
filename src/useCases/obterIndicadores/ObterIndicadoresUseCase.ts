@@ -132,16 +132,14 @@ class ObterIndicadoresUseCase {
       estados: [],
     };
 
-    const nomesEstados = Object.keys(estados);
-
-    dadosFormatados.estados = nomesEstados.map((nomeEstado) => {
-      const nome = nomeEstado;
-      const confirmados = (estados as unknown as IMap)[nomeEstado].confirmed;
-      const obitos = (estados as unknown as IMap)[nomeEstado].deaths;
-
+    //* Formata os dados para cada estado
+    for (const estado in estados) {
+      const nome = estado;
+      const confirmados = (estados as unknown as IMap)[estado].confirmed;
+      const obitos = (estados as unknown as IMap)[estado].deaths;
       // eslint-disable-next-line @typescript-eslint/naming-convention
       const ultima_atualizacao = new Date(
-        (estados as unknown as IMap)[nomeEstado].updated
+        (estados as unknown as IMap)[estado].updated
       ).toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "2-digit",
@@ -151,13 +149,13 @@ class ObterIndicadoresUseCase {
         second: "2-digit",
       });
 
-      return {
+      dadosFormatados.estados.push({
         nome,
         confirmados,
         obitos,
         ultima_atualizacao,
-      };
-    });
+      });
+    }
 
     return dadosFormatados;
   }
