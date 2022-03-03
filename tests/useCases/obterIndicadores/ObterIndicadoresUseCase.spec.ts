@@ -10,7 +10,6 @@ describe("Obter indicadores", () => {
     expect(typeof pais.expectativa_vida).toBe("number");
     expect(typeof pais.total_casos_confirmados).toBe("number");
     expect(typeof pais.numero_populacao).toBe("number");
-    expect(typeof pais.total_casos_confirmados).toBe("number");
     expect(typeof pais.total_obitos).toBe("number");
     expect(typeof pais.total_doses_aplicadas).toBe("number");
     expect(typeof pais.pessoas_vacinadas).toBe("number");
