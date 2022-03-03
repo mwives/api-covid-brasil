@@ -1,6 +1,6 @@
 import { httpClient } from "../../shared/infra/http/client/axiosHttpClient";
 
-interface IEstado {
+interface IInfoEstado {
   confirmed: number;
   deaths: number;
   updated: Date;
@@ -14,32 +14,32 @@ interface IInfoPais {
     population: number;
     life_expectancy: string;
   };
-  Acre: IEstado;
-  Alagoas: IEstado;
-  Amapa: IEstado;
-  Amazonas: IEstado;
-  Bahia: IEstado;
-  Ceara: IEstado;
-  "Distrito Federal": IEstado;
-  "Espirito Santo": IEstado;
-  Maranhao: IEstado;
-  "Mato Grosso": IEstado;
-  "Mato Grosso do Sul": IEstado;
-  "Minas Gerais": IEstado;
-  Para: IEstado;
-  Paraiba: IEstado;
-  Parana: IEstado;
-  Pernambuco: IEstado;
-  Piaui: IEstado;
-  "Rio Grande do Norte": IEstado;
-  "Rio Grande do Sul": IEstado;
-  "Rio de Janeiro": IEstado;
-  Rondonia: IEstado;
-  Roraima: IEstado;
-  "Santa Catarina": IEstado;
-  "Sao Paulo": IEstado;
-  Sergipe: IEstado;
-  Tocantins: IEstado;
+  Acre: IInfoEstado;
+  Alagoas: IInfoEstado;
+  Amapa: IInfoEstado;
+  Amazonas: IInfoEstado;
+  Bahia: IInfoEstado;
+  Ceara: IInfoEstado;
+  "Distrito Federal": IInfoEstado;
+  "Espirito Santo": IInfoEstado;
+  Maranhao: IInfoEstado;
+  "Mato Grosso": IInfoEstado;
+  "Mato Grosso do Sul": IInfoEstado;
+  "Minas Gerais": IInfoEstado;
+  Para: IInfoEstado;
+  Paraiba: IInfoEstado;
+  Parana: IInfoEstado;
+  Pernambuco: IInfoEstado;
+  Piaui: IInfoEstado;
+  "Rio Grande do Norte": IInfoEstado;
+  "Rio Grande do Sul": IInfoEstado;
+  "Rio de Janeiro": IInfoEstado;
+  Rondonia: IInfoEstado;
+  Roraima: IInfoEstado;
+  "Santa Catarina": IInfoEstado;
+  "Sao Paulo": IInfoEstado;
+  Sergipe: IInfoEstado;
+  Tocantins: IInfoEstado;
 }
 
 interface IInfoVacinacaoPais {
@@ -70,11 +70,11 @@ interface IDadosFormatados {
 }
 
 interface IMap {
-  [key: string]: IEstado;
+  [key: string]: IInfoEstado;
 }
 
 class ObterIndicadoresUseCase {
-  async execute() {
+  async execute(): Promise<IDadosFormatados> {
     /*
       console.time("double await");
       //* Média de 1.6 segundos
@@ -112,13 +112,13 @@ class ObterIndicadoresUseCase {
     ]);
     // console.timeEnd("Promise.all");
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    /* eslint-disable @typescript-eslint/naming-convention */
     const { country, life_expectancy, confirmed, population, deaths } =
       infoPais;
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { administered, people_vaccinated, people_partially_vaccinated } =
       infoVacinacaoPais;
+    /* eslint-enable @typescript-eslint/naming-convention */
 
     const dadosFormatados: IDadosFormatados = {
       pais: {
@@ -151,12 +151,14 @@ class ObterIndicadoresUseCase {
         second: "2-digit",
       });
 
-      dadosFormatados.estados.push({
+      const dadosEstadoFormatados = {
         nome,
         confirmados,
         obitos,
         ultima_atualizacao,
-      });
+      };
+
+      dadosFormatados.estados.push(dadosEstadoFormatados);
     }
 
     return dadosFormatados;
