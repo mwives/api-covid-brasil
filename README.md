@@ -10,28 +10,40 @@ Api para consulta a respeito de dados da COVID-19 no Brasil e em seus respectivo
 
 ---
 
-## Como rodar
-
-### Instalando as dependências
+## Rodando a aplicação localmente
 
 ```
+$ git clone https://github.com/mwives/api-covid-brasil.git
 $ yarn install
-```
-ou 
-```
-$ npm install
-```
-
-### Rodando a aplicação
-
-```
 $ yarn start:dev
 ```
-ou
+
+Ou com npm:
+
 ```
+$ git clone https://github.com/mwives/api-covid-brasil.git
+$ npm install
 $ npm run start:dev
 ```
 
-A aplicação já deve estar rodando em http://localhost:3333
+A aplicação já deve estar rodando em http://localhost:3333.
 
----
+#
+
+### Rodando os testes
+
+```
+// Saída enxuta
+$ yarn test
+// Saída detalhada
+$ yarn test:verbose
+```
+
+Ou com npm:
+
+```
+// Saída enxuta
+$ npm run test
+// Saída detalhada
+$ npm run test:verbose
+```
