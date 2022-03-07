@@ -1,3 +1,4 @@
+import { AppError } from "../../shared/errors/AppError";
 import { httpClient } from "../../shared/infra/http/client/axiosHttpClient";
 
 interface IInfoEstado {
@@ -109,7 +110,9 @@ class ObterIndicadoresUseCase {
       httpClient.get<IInfoVacinacaoPais>(
         "https://covid-api.mmediagroup.fr/v1/vaccines?country=Brazil"
       ),
-    ]);
+    ]).catch(() => {
+      throw new AppError("Não foi possível se conectar com API externa.", 500);
+    });
     // console.timeEnd("Promise.all");
 
     /* eslint-disable @typescript-eslint/naming-convention */
