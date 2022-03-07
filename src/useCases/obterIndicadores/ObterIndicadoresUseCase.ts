@@ -1,5 +1,8 @@
+import { inject, injectable } from "tsyringe";
+
+import { IHttpClient } from "../../shared/container/providers/httpClient/IHttpClient";
+import { HTTP_CLIENT_PROVIDER } from "../../shared/container/providers/injectionTokens";
 import { AppError } from "../../shared/errors/AppError";
-import { httpClient } from "../../shared/infra/http/client/axiosHttpClient";
 
 interface IInfoEstado {
   confirmed: number;
@@ -7,6 +10,10 @@ interface IInfoEstado {
   updated: Date;
 }
 
+/**
+ * Se Futuramente a API for pegar dados de outros países,
+ * esta parte de interfaces precisa ser melhorada para reutilização.
+ */
 interface IInfoPais {
   All: {
     confirmed: number;
@@ -74,7 +81,18 @@ interface IMap {
   [key: string]: IInfoEstado;
 }
 
+@injectable()
 class ObterIndicadoresUseCase {
+  private httpClient;
+
+  constructor(
+    @inject(HTTP_CLIENT_PROVIDER)
+    private httpClientFactory: IHttpClient
+  ) {
+    //! Não tenho certeza se é assim que se usam factories
+    this.httpClient = this.httpClientFactory.create();
+  }
+
   async execute(): Promise<IDadosFormatados> {
     /*
       console.time("double await");
@@ -104,10 +122,10 @@ class ObterIndicadoresUseCase {
         data: { All: infoVacinacaoPais },
       },
     ] = await Promise.all([
-      httpClient.get<IInfoPais>(
+      this.httpClient.get<IInfoPais>(
         "https://covid-api.mmediagroup.fr/v1/cases?country=Brazil"
       ),
-      httpClient.get<IInfoVacinacaoPais>(
+      this.httpClient.get<IInfoVacinacaoPais>(
         "https://covid-api.mmediagroup.fr/v1/vaccines?country=Brazil"
       ),
     ]).catch(() => {

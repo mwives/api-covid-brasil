@@ -1,4 +1,6 @@
 import "express-async-errors";
+import "reflect-metadata";
+import "../../container/providers";
 
 import express, { NextFunction, Request, Response } from "express";
 
